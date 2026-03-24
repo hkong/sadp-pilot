@@ -1,8 +1,14 @@
-name: Handle Source Notification
+name: Check for SADP CVEs
 
 on:
-  repository_dispatch:
-    types: [source_repo_updated]
+  # repository_dispatch:
+  #   types: [source_repo_updated]
+  
+  # run every 5~10 minutes (min Github scheduling allowed)
+  schedule:
+    - cron: '*/5 * * * *'
+
+  # enable manual exec
   workflow_dispatch:
     inputs:
       params:
