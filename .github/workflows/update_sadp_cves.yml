@@ -1,4 +1,4 @@
-name: Check for SADP CVEs
+name: Update SADP CVEs
 
 on:
   # repository_dispatch:
