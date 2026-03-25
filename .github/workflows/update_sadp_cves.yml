@@ -66,6 +66,10 @@ jobs:
           git config --global user.name "cvelist update Github Action"
           git add cves.sadp
           git status
-          git commit -m 'updated SADP to cves.sadp'
-          git push
-          
+
+          if git diff --cached --quiet; then
+            echo "No changes in cves.sadp; skipping commit/push."
+          else
+            git commit -m 'updated SADP to cves.sadp'
+            git push
+          fi
