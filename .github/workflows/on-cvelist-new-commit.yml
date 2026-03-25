@@ -20,11 +20,12 @@ jobs:
   process-change:
     runs-on: ubuntu-latest
     steps:
-      - name: Log Payload
-        run: |
-          echo "Received update from source!"
-          echo "Commit SHA: ${{ github.event.client_payload.sha }}"
-          echo "Message: ${{ github.event.client_payload.message }}"
+      # useful for debugging repository_dispatch, but we're not using that right now
+      # - name: Log Payload
+      #   run: |
+      #     echo "Received update from source!"
+      #     echo "Commit SHA: ${{ github.event.client_payload.sha }}"
+      #     echo "Message: ${{ github.event.client_payload.message }}"
           
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -47,24 +48,24 @@ jobs:
       - name: Run cve-cli
         run: |
           pwd
-          # ls -al
-          # cd package
           # copy all code to root directory
           cp -a ./package/. .
-          # pwd
           ls -al
-          NODE_CONFIG_ENV=devel ./bin/run.js date -v
-          # NODE_CONFIG_ENV=devel ./bin/run.js delta deltalog get
+          # run date to get timestamp and cve-cli version info
+          NODE_CONFIG_ENV=sadp ./bin/run.js date -v
 
+          # update repository using deltalog and cvelistV5
           NODE_CONFIG_ENV=sadp ./bin/run.js cvelist update --sourceCvelist
-          echo "downloads:"
-          ls -alR downloads && ls -R downloads | grep CVE- | wc -l
-          echo "cves.sadp:"
-          ls -alR cves.sadp && ls -R cves.sadp | grep CVE- | wc -l
+          
+          # echo "downloads:"
+          # ls -alR downloads && ls -R downloads | grep CVE- | wc -l
+          # echo "cves.sadp:"
+          # ls -alR cves.sadp && ls -R cves.sadp | grep CVE- | wc -l
 
           git config --global user.email "github_action@example.com"
-          git config --global user.name "cvelistV5 Github Action"
+          git config --global user.name "cvelist update Github Action"
           git add cves.sadp
+          git status
           git commit -m 'updated SADP to cves.sadp'
           git push
           
