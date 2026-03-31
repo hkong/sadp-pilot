@@ -9,7 +9,7 @@
     // these variables are for working with CVEs with SADP information
     "sadp": {
       "deltaLog": {
-        "numLookback": 10
+        "numLookback": 1
       },
       // the code reviews CVEs based on the jsonpath string, looking for matching values
       "conditionalCveCopy": {
