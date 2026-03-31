@@ -55,8 +55,8 @@ jobs:
           NODE_CONFIG_ENV=sadp NODE_CONFIG_DIR=./config ./bin/run.js date -v
 
           # update repository using deltalog and cvelistV5
-          NODE_CONFIG_ENV=sadp\
-          NODE_CONFIG_DIR=./config\
+          NODE_CONFIG_ENV=sadp \
+          NODE_CONFIG_DIR=./config \
             ./bin/run.js cvelist update --sourceCvelist
           
           # echo "downloads:"
